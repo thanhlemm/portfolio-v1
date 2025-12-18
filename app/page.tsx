@@ -2,11 +2,6 @@ import Navbar from "@/components/navigation/Navbar";
 import Toolbar from "@/components/navigation/Toolbar";
 import About from "@/components/sections/About";
 import Home from "@/components/sections/Home";
-import Hero from "@/components/test-framer-motion";
-import Scene from "@/components/test-threejs";
-import { ModeToggle } from "@/components/toggle/modeToggle";
-import { motion } from "framer-motion";
-import Image from "next/image";
 
 export default function Page() {
   return (

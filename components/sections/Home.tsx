@@ -13,7 +13,6 @@ import {
 } from "@/constants/for-home-page";
 import { Canvas as R3fCanvas } from "@react-three/fiber";
 import DonutSphere from "../three/DonutSphere";
-import { DEFAULT_CONFIG } from "@/constants/config-fluid";
 
 // Animation variants
 const slideInFromLeft = {
@@ -202,108 +201,6 @@ const Home = () => {
   const [charIndex, setCharIndex] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
-
-  const config = {
-    intensity: {
-      value: DEFAULT_CONFIG.intensity,
-      min: 0.0,
-      max: 10,
-      step: 0.01,
-      label: "intensity",
-    },
-
-    force: {
-      value: DEFAULT_CONFIG.force,
-      min: 0,
-      max: 20,
-      step: 0.1,
-      label: "force",
-    },
-
-    distortion: {
-      value: DEFAULT_CONFIG.distortion,
-      min: 0,
-      max: 2,
-      step: 0.01,
-      label: "distortion",
-    },
-
-    curl: {
-      value: DEFAULT_CONFIG.curl,
-      min: 0,
-      max: 50,
-      step: 0.1,
-      label: "curl",
-    },
-
-    swirl: {
-      value: DEFAULT_CONFIG.swirl,
-      min: 0,
-      max: 20,
-      step: 1,
-      label: "swirl",
-    },
-
-    fluidColor: {
-      value: DEFAULT_CONFIG.fluidColor,
-      label: "fluid color",
-    },
-
-    backgroundColor: {
-      value: DEFAULT_CONFIG.backgroundColor,
-      label: "background color",
-    },
-
-    blend: {
-      value: DEFAULT_CONFIG.blend,
-      min: 0.0,
-      max: 10,
-      step: 0.01,
-      label: "blend",
-    },
-
-    showBackground: {
-      value: DEFAULT_CONFIG.showBackground,
-      label: "show background",
-    },
-
-    rainbow: {
-      value: true,
-      label: "rainbow mode",
-    },
-
-    pressure: {
-      value: DEFAULT_CONFIG.pressure,
-      min: 0,
-      max: 1,
-      step: 0.01,
-      label: "pressure reduction",
-    },
-
-    densityDissipation: {
-      value: DEFAULT_CONFIG.densityDissipation,
-      min: 0,
-      max: 1,
-      step: 0.01,
-      label: "density dissipation",
-    },
-
-    velocityDissipation: {
-      value: DEFAULT_CONFIG.velocityDissipation,
-      min: 0,
-      max: 1,
-      step: 0.01,
-      label: "velocity dissipation",
-    },
-
-    radius: {
-      value: DEFAULT_CONFIG.radius,
-      min: 0.01,
-      max: 1,
-      step: 0.01,
-      label: "radius",
-    },
-  };
 
   useEffect(() => {
     setMounted(true);
