@@ -26,14 +26,5 @@ export const PROJECTS: Project[] = [
     liveUrl: "",
     githubUrl: "https://github.com/thanhlemm/AI-study-tracker-BE",
   },
-  {
-    title: "Developer Portfolio",
-    description:
-      "A cohesive futuristic portfolio experience with consistent glass/glow system and smooth scroll reveals.",
-    stack: ["Next.js", "Framer Motion", "TypeScript"],
-    thumbnailSrc: "/file.svg",
-    liveUrl: "https://example.com",
-    githubUrl: "https://github.com/example",
-  },
 ];
 
