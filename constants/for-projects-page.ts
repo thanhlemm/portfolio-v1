@@ -9,7 +9,7 @@ export type Project = {
 
 export const PROJECTS: Project[] = [
   {
-    title: "Hotel Management System",
+    title: "Hotel Management System - Full Stack",
     description:
       "A full-stack hotel management platform with online booking, VNPay payments, real-time messaging, room management, and role-based workflows for customers, receptionists, and administrators.",
     stack: ["React", "Django", "MySQL", "WebSockets"],
@@ -18,7 +18,7 @@ export const PROJECTS: Project[] = [
     githubUrl: "https://github.com/thanhlemm/DoAn_QLKS",
   },
   {
-    title: "AI Study Tracker Backend",
+    title: "AI Study Tracker Backend - NestJS",
     description:
       "A NestJS backend concept for an AI-powered study management platform that analyzes learning performance, tracks study sessions, and generates personalized schedules using AI-driven insights.",
     stack: ["NestJS", "TypeScript", "PostgreSQL", "TypeORM", "JWT", "OpenAI"],
