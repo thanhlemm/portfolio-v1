@@ -1,54 +1,63 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import { useTheme } from "next-themes";
+import { useMounted } from "@/hooks/useMounted";
+import { ModeToggle } from "@/components/toggle/modeToggle";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("Home");
 
-  const navItems = [
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
+  const mounted = useMounted();
+
+  const navItems = React.useMemo(
+    () => [
     { href: "#Home", label: "Home" },
-    { href: "#About", label: "About" },
+    { href: "#Experience", label: "Experience" },
     { href: "#Projects", label: "Projects" },
     { href: "#Contact", label: "Contact" },
-  ];
+    ],
+    []
+  );
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
+
       const sections = navItems
         .map((item) => {
-          const section = document.querySelector(item.href) as HTMLElement;
-          if (section) {
-            return {
-              id: item.href.replace("#", ""),
-              offset: section.offsetTop - 550,
-              height: section.offsetHeight,
-            };
-          }
-          return null;
+          const section = document.querySelector(item.href) as HTMLElement | null;
+          if (!section) return null;
+
+          return {
+            id: item.href.replace("#", ""),
+            offset: section.offsetTop - 550,
+            height: section.offsetHeight,
+          };
         })
-        .filter(Boolean);
+        .filter((v): v is { id: string; offset: number; height: number } => Boolean(v));
 
       const currentPosition = window.scrollY;
 
       const active = sections.find(
         (section) =>
-          section &&
           currentPosition >= section.offset &&
           currentPosition < section.offset + section.height
       );
 
-      if (active) {
-        setActiveSection(active.id);
-      }
+      if (active) setActiveSection(active.id);
     };
 
     window.addEventListener("scroll", handleScroll);
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [navItems]);
+
 
   useEffect(() => {
     if (isOpen) {
@@ -58,7 +67,7 @@ const Navbar = () => {
     }
   }, [isOpen]);
 
-  const scrollToSection = (e: any, href: string) => {
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     const section = document.querySelector(href) as HTMLElement;
     if (section) {
@@ -71,74 +80,100 @@ const Navbar = () => {
     setIsOpen(false);
   };
 
+  const navActiveClass = mounted
+    ? isDark
+      ? "bg-pink-300/95 text-black"
+      : "bg-black/90 text-white"
+    : "bg-black/90 text-white";
+
+  const navInactiveClass = mounted
+    ? isDark
+      ? "text-pink-200/90 hover:text-pink-100"
+      : "text-gray-600 hover:text-gray-900"
+    : "text-gray-600 hover:text-gray-900";
+
   return (
     <nav
-      className={`fixed w-full top-0 z-50 transition-all duration-500 ${
+      className={`fixed top-4 left-0 right-0 z-50 transition-all duration-500 ${
         isOpen
           ? "bg-white/30 backdrop-blur-sm"
-          : scrolled
-          ? "bg-transparent backdrop-blur-sm"
           : "bg-transparent"
       }`}
     >
+      {/* Outer navbar wrapper */}
       <div className="mx-auto px-[5%] sm:px-[5%] lg:px-[10%]">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <div className="shrink-0 min-w-fit pr-4 sm:pr-0">
+        {/* compact row */}
+        <div className="relative flex items-center justify-between h-14">
+          {/* Left: Logo */}
+          <div className="shrink-0 min-w-fit">
             <a
               href="#Home"
               onClick={(e) => scrollToSection(e, "#Home")}
-              className="text-xl font-bold bg-linear-to-r from-blue-300 via-blue-400 to-blue-500 bg-clip-text text-transparent"
+              className="text-xl font-bbh-hegarty"
             >
-              Lem
+              LEM
             </a>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-8 flex items-center space-x-8">
-              {navItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  onClick={(e) => scrollToSection(e, item.href)}
-                  className="group relative px-1 py-2 text-sm font-medium"
-                >
-                  <span
-                    className={`relative z-10 transition-colors duration-300 ${
-                      activeSection === item.href.substring(1)
-                        ? "bg-linear-to-r from-blue-400 to-blue-500 bg-clip-text text-transparent font-semibold"
-                        : "text-blue-500 group-hover:text-blue-700"
-                    }`}
-                  >
-                    {item.label}
-                  </span>
-                  <span
-                    className={`absolute bottom-0 left-0 w-full h-0.5 bg-linear-to-r from-blue-400 to-blue-500 transform origin-left transition-transform duration-300 ${
-                      activeSection === item.href.substring(1)
-                        ? "scale-x-100"
-                        : "scale-x-0 group-hover:scale-x-100"
-                    }`}
-                  />
-                </a>
-              ))}
+          {/* Center: floating rounded navigation */}
+          <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center">
+            <div
+              className={
+                "flex items-center rounded-2xl px-2 py-2 backdrop-blur-xl border shadow-[0_10px_30px_rgba(0,0,0,0.08)] " +
+                (mounted && isDark
+                  ? "bg-black/35 border-white/10"
+                  : "bg-white/60 border-black/10")
+              }
+              role="navigation"
+              aria-label="Primary"
+            >
+              <div className="flex items-center gap-1">
+                {navItems.map((item) => {
+                  const isActive = activeSection === item.href.substring(1);
+                  return (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      onClick={(e) => scrollToSection(e, item.href)}
+                      className={
+                        "relative z-10 px-3 py-2 rounded-xl text-sm font-bbh-hegarty transition-colors duration-300 " +
+                        (isActive
+                          ? navActiveClass
+                          : "bg-transparent " + navInactiveClass)
+                      }
+                    >
+                      {item.label}
+                    </a>
+                  );
+                })}
+              </div>
             </div>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className={`relative p-2 text-blue-500 hover:text-blue-700 transition-transform duration-300 ease-in-out transform ${
-                isOpen ? "rotate-90 scale-125" : "rotate-0 scale-100"
-              }`}
-            >
-              {isOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
-            </button>
+          {/* Right: Theme toggle (inside navbar) */}
+          <div className="shrink-0">
+            <div className="hidden md:block">
+              <ModeToggle />
+            </div>
+
+            {/* Mobile Menu Button */}
+            <div className="md:hidden">
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className={`relative p-2 ${
+                  isDark && mounted ? "text-pink-300" : "text-black"
+                } transition-transform duration-300 ease-in-out transform ${
+                  isOpen ? "rotate-90 scale-125" : "rotate-0 scale-100"
+                }`}
+                aria-label={isOpen ? "Close menu" : "Open menu"}
+              >
+                {isOpen ? (
+                  <X className="w-6 h-6" />
+                ) : (
+                  <Menu className="w-6 h-6" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -152,29 +187,40 @@ const Navbar = () => {
         }`}
       >
         <div className="px-4 py-6 space-y-4">
-          {navItems.map((item, index) => (
-            <a
-              key={item.label}
-              href={item.href}
-              onClick={(e) => scrollToSection(e, item.href)}
-              className={`block px-4 py-3 text-lg font-medium transition-all duration-300 ease ${
-                activeSection === item.href.substring(1)
-                  ? "bg-linear-to-r from-blue-400 to-blue-500 bg-clip-text text-transparent font-semibold"
-                  : "text-blue-700 hover:text-blue-700"
-              }`}
-              style={{
-                transitionDelay: `${index * 100}ms`,
-                transform: isOpen ? "translateX(0)" : "translateX(50px)",
-                opacity: isOpen ? 1 : 0,
-              }}
-            >
-              {item.label}
-            </a>
-          ))}
+          {navItems.map((item, index) => {
+            const isActive = activeSection === item.href.substring(1);
+            return (
+              <a
+                key={item.label}
+                href={item.href}
+                onClick={(e) => scrollToSection(e, item.href)}
+                className={`block px-4 py-3 rounded-xl font-medium transition-all duration-300 ease font-bbh-hegarty ${
+                  isActive
+                    ? navActiveClass
+                    : "bg-transparent " + (mounted && isDark
+                        ? "text-pink-200/90 hover:text-pink-100"
+                        : "text-gray-600 hover:text-gray-900")
+                }`}
+                style={{
+                  transitionDelay: `${index * 100}ms`,
+                  transform: isOpen ? "translateX(0)" : "translateX(50px)",
+                  opacity: isOpen ? 1 : 0,
+                }}
+              >
+                {item.label}
+              </a>
+            );
+          })}
+
+          {/* Ensure theme toggle is always present on mobile too */}
+          <div className="pt-2">
+            <ModeToggle />
+          </div>
         </div>
       </div>
     </nav>
   );
 };
+
 
 export default Navbar;

@@ -54,104 +54,70 @@ const fadeInLeft = {
 };
 
 // Memoized Components
-const MainTitle = memo(({ isDark }: { isDark: boolean }) => (
-  <motion.div className="space-y-2" variants={slideInFromLeft}>
-    <h1 className="text-5xl sm:text-6xl md:text-6xl lg:text-6xl xl:text-7xl font-bold tracking-tight">
-      <span className="relative inline-block">
-        <span className="absolute -inset-2 bg-linear-to-r from-blue-400 to-blue-500 blur-2xl opacity-20"></span>
-        <span
-          className={`relative bg-clip-text text-transparent bg-linear-to-r ${
-            isDark
-              ? "from-white via-blue-100 to-blue-200"
-              : "from-blue-600 via-blue-700 to-blue-800"
-          }`}
-        >
-          Frontend
+const MainTitle = memo(
+  ({ isDark, isHovering }: { isDark: boolean; isHovering: boolean }) => (
+    <motion.div
+      className="space-y-2 flex [@media(min-width:1116px)]:justify-center justify-start mt-25"
+      variants={slideInFromLeft}
+    >
+      <h1 className="text-9xl sm:text-6xl md:text-6xl lg:text-6xl xl:text-7xl font-bold tracking-tight font-bbh-hegarty md:mt-50">
+        <span className="relative inline-block">
+          <span className="absolute -inset-2 bg-linear-to-r from-blue-400 to-blue-500 blur-2xl opacity-20"></span>
+          <span className={`relative bg-clip-text `}>
+            FR
+            <span className="relative inline-block w-[1em] h-[1em] align-middle mx-1">
+              <R3fCanvas
+                style={{
+                  position: "absolute",
+                  top: "40%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  width: "5em",
+                  height: "1.5em",
+                }}
+              >
+                <Suspense fallback={null}>
+                  <DonutSphere />
+                </Suspense>
+              </R3fCanvas>
+            </span>
+            NTEND {"  "}
+            <br className="hidden [@media(max-width:1115px)]:block" />
+            DEVEL
+            <span className="relative inline-block w-[1em] h-[1em] align-middle mx-1">
+              <R3fCanvas
+                style={{
+                  position: "absolute",
+                  top: "40%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  width: "1.2em",
+                  height: "1.5em",
+                }}
+              >
+                <Suspense fallback={null}>
+                  <DonutSphere />
+                </Suspense>
+              </R3fCanvas>
+            </span>
+            PER
+          </span>
         </span>
-      </span>
-      <br />
-      <span className="relative inline-block mt-2">
-        <span className="absolute -inset-2 bg-linear-to-r from-blue-400 to-blue-500 blur-2xl opacity-20"></span>
-        <span className="relative bg-linear-to-r from-blue-400 to-blue-500 bg-clip-text text-transparent">
-          Developer
-        </span>
-      </span>
-    </h1>
-  </motion.div>
-));
+        <br />
+      </h1>
+    </motion.div>
+  )
+);
 
 const TechStack = memo(
   ({ tech, isDark }: { tech: string; isDark: boolean }) => (
     <motion.div
-      className={`px-4 py-2 hidden sm:block rounded-full backdrop-blur-sm border text-sm font-semibold transition-colors ${
-        isDark
-          ? "bg-blue-200/5 border-blue-200/20 text-blue-200 hover:bg-blue-200/10"
-          : "bg-blue-100/30 border-blue-300/40 text-blue-700 hover:bg-blue-100/50"
-      }`}
+      className={`px-4 py-2 hidden sm:block rounded-full backdrop-blur-sm border border-blue-400/25 text-lg font-extralight font-bbh-bogle transition-colors bg-transparent`}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
     >
       {tech}
     </motion.div>
-  )
-);
-
-const CTAButton = memo(
-  ({
-    href,
-    text,
-    icon: Icon,
-    isDark,
-  }: {
-    href: string;
-    text: string;
-    icon: any;
-    isDark: boolean;
-  }) => (
-    <a href={href}>
-      <motion.button
-        className="group relative w-40"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        <div className="absolute -inset-0.5 bg-linear-to-r from-blue-400 to-blue-500 rounded-xl opacity-50 blur-md group-hover:opacity-90 transition-all duration-700"></div>
-        <div
-          className={`relative h-11 backdrop-blur-xl rounded-lg border leading-none overflow-hidden ${
-            isDark
-              ? "bg-[#030014] border-blue-200/20"
-              : "bg-white border-blue-300/30"
-          }`}
-        >
-          <div
-            className={`absolute inset-0 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ${
-              isDark
-                ? "bg-linear-to-r from-blue-400/20 to-blue-500/20"
-                : "bg-linear-to-r from-blue-400/10 to-blue-500/10"
-            }`}
-          ></div>
-          <span className="absolute inset-0 flex items-center justify-center gap-2 text-sm group-hover:gap-3 transition-all duration-300">
-            <span
-              className={`bg-clip-text text-transparent font-medium z-10 ${
-                isDark
-                  ? "bg-linear-to-r from-blue-200 to-blue-100"
-                  : "bg-linear-to-r from-blue-600 to-blue-700"
-              }`}
-            >
-              {text}
-            </span>
-            <Icon
-              className={`w-4 h-4 ${
-                isDark ? "text-blue-200" : "text-blue-600"
-              } ${
-                text === "Contact"
-                  ? "group-hover:translate-x-1"
-                  : "group-hover:rotate-45"
-              } transform transition-all duration-300 z-10`}
-            />
-          </span>
-        </div>
-      </motion.button>
-    </a>
   )
 );
 
@@ -171,7 +137,7 @@ const SocialLink = memo(
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
       >
-        <div className="absolute inset-0 bg-linear-to-r from-blue-400 to-blue-500 rounded-xl blur opacity-20 group-hover:opacity-40 transition duration-300"></div>
+        <div className="absolute inset-0  opacity-20 group-hover:opacity-40 transition duration-300"></div>
         <div
           className={`relative rounded-xl backdrop-blur-xl p-2 flex items-center justify-center border transition-all duration-300 ${
             isDark
@@ -179,13 +145,7 @@ const SocialLink = memo(
               : "bg-white/50 border-blue-300/30 group-hover:border-blue-400/50"
           }`}
         >
-          <Icon
-            className={`w-5 h-5 transition-colors ${
-              isDark
-                ? "text-blue-200 group-hover:text-blue-100"
-                : "text-blue-600 group-hover:text-blue-700"
-            }`}
-          />
+          <Icon className={`w-5 h-5 transition-colors `} />
         </div>
       </motion.button>
     </a>
@@ -241,17 +201,17 @@ const Home = () => {
 
   return (
     <motion.div
-      className="min-h-screen dark:bg-[#030014] bg-white overflow-hidden px-[5%] sm:px-[5%] md:px-[7%] lg:px-[10%]"
+      className="min-h-screen overflow-hidden px-[5%] sm:px-[5%] md:px-[7%] lg:px-[10%]"
       id="Home"
       initial={{ opacity: 0 }}
       animate={isLoaded ? { opacity: 1 } : { opacity: 0 }}
       transition={{ duration: 1 }}
     >
       <div className="container mx-auto min-h-screen">
-        <div className="flex flex-col md:flex-row items-center justify-center min-h-screen md:h-screen md:justify-center gap-4 sm:gap-8 md:gap-12 lg:gap-20">
+        <div className="flex flex-col md:flex-row items-center justify-center min-h-screen md:h-screen md:justify-center gap-4 sm:gap-8 md:gap-12 lg:gap-20 md:items-start">
           {/* Left Column */}
           <motion.div
-            className="w-full md:w-1/2 absolute md:static inset-0 md:inset-auto space-y-4 sm:space-y-6 md:space-y-8 text-left order-1 flex flex-col justify-center md:justify-start z-10 md:z-auto px-[5%] md:px-0"
+            className="w-full md:max-w-11/12 absolute md:static inset-0 md:inset-auto space-y-4 sm:space-y-6 md:space-y-8 text-left order-1 flex flex-col justify-center md:justify-start z-10 md:z-auto px-[5%] md:px-0"
             variants={fadeInRight}
             initial="hidden"
             animate="visible"
@@ -264,42 +224,28 @@ const Home = () => {
               animate="visible"
             >
               {/* Title */}
-              <MainTitle isDark={isDark} />
+              <MainTitle isDark={isDark} isHovering={isHovering} />
 
               {/* Typing Effect */}
               <motion.div
-                className="h-8 flex items-center"
+                className="h-8 flex [@media(min-width:1116px)]:justify-center justify-start"
                 variants={slideInFromLeft}
               >
                 <span
-                  className={`text-xl md:text-2xl bg-clip-text text-transparent font-light ${
-                    isDark
-                      ? "bg-linear-to-r from-blue-100 to-blue-200"
-                      : "bg-linear-to-r from-blue-500 to-blue-600"
-                  }`}
+                  className={`text-xl md:text-2xl font-light font-bbh-bogle `}
                 >
                   {text}
                 </span>
                 <motion.span
-                  className="w-[3px] h-6 bg-linear-to-t from-blue-400 to-blue-500 ml-1"
+                  className="w-0.75 h-6 bg-linear-to-t from-blue-400 to-blue-500 ml-1"
                   animate={{ opacity: [1, 0] }}
                   transition={{ duration: 0.8, repeat: Infinity }}
                 />
               </motion.div>
 
-              {/* Description */}
-              <motion.p
-                className={`text-base md:text-lg max-w-xl leading-relaxed font-light ${
-                  isDark ? "text-blue-300/70" : "text-blue-700/80"
-                }`}
-                variants={slideInFromLeft}
-              >
-                Creating an Innovative, Functional, and User-Friendly Website.
-              </motion.p>
-
               {/* Tech Stack */}
               <motion.div
-                className="flex flex-wrap gap-3 justify-start"
+                className="flex flex-wrap [@media(min-width:1116px)]:justify-center gap-3 justify-start mt-20"
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
@@ -311,34 +257,9 @@ const Home = () => {
                 ))}
               </motion.div>
 
-              {/* CTA Buttons */}
-              <motion.div
-                className="flex flex-row gap-3 w-full justify-start"
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-              >
-                <motion.div variants={slideInFromLeft}>
-                  <CTAButton
-                    href="#Projects"
-                    text="Projects"
-                    icon={ExternalLink}
-                    isDark={isDark}
-                  />
-                </motion.div>
-                <motion.div variants={slideInFromLeft}>
-                  <CTAButton
-                    href="#Contact"
-                    text="Contact"
-                    icon={Mail}
-                    isDark={isDark}
-                  />
-                </motion.div>
-              </motion.div>
-
               {/* Social Links */}
               <motion.div
-                className="flex flex-row gap-4 w-full justify-start"
+                className="flex flex-row gap-4 mt-15 w-full justify-start [@media(min-width:1116px)]:justify-center"
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
@@ -350,31 +271,6 @@ const Home = () => {
                 ))}
               </motion.div>
             </motion.div>
-          </motion.div>
-
-          {/* Right Column - Animation */}
-          <motion.div
-            className="w-full py-[75%] sm:py-[8%] md:py-0 lg:w-1/2 h-auto md:h-[400px] lg:h-[600px] xl:h-[750px] relative flex items-center justify-center order-2 lg:order-2 mt-6 sm:mt-8 md:mt-0 lg:mt-0"
-            onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}
-            variants={fadeInLeft}
-            initial="hidden"
-            animate="visible"
-            transition={{ delay: 0.6 }}
-          >
-            <R3fCanvas
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                height: "100%",
-                width: "100%",
-              }}
-            >
-              <Suspense fallback={null}>
-                <DonutSphere />
-              </Suspense>
-            </R3fCanvas>
           </motion.div>
         </div>
       </div>

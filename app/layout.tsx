@@ -1,5 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import {
+  Geist,
+  Geist_Mono,
+  BBH_Bartle,
+  BBH_Bogle,
+  BBH_Hegarty,
+} from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import "@/styles/globals.css";
 
@@ -11,6 +17,30 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const bbhBartle = BBH_Bartle({
+  weight: "400",
+  variable: "--font-bbh-bartle",
+  subsets: ["latin"],
+  display: "swap",
+  adjustFontFallback: false,
+});
+
+const bbhBogle = BBH_Bogle({
+  weight: "400",
+  variable: "--font-bbh-bogle",
+  subsets: ["latin"],
+  display: "swap",
+  adjustFontFallback: false,
+});
+
+const bbhHegarty = BBH_Hegarty({
+  weight: "400",
+  variable: "--font-bbh-hegarty",
+  subsets: ["latin"],
+  display: "swap",
+  adjustFontFallback: false,
 });
 
 export const metadata: Metadata = {
@@ -26,7 +56,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${bbhBartle.variable} ${bbhBogle.variable} ${bbhHegarty.variable} antialiased`}
       >
         <ThemeProvider
           attribute="class"

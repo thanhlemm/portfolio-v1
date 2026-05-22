@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { ArrowUp } from "lucide-react";
-import { ModeToggle } from "../toggle/modeToggle";
 import { Button } from "../ui/button";
 
 const Toolbar = () => {
@@ -36,9 +35,6 @@ const Toolbar = () => {
           <ArrowUp className="w-4 h-4" />
         </Button>
       )}
-
-      {/* Theme Toggle */}
-      <ModeToggle />
     </div>
   );
 };

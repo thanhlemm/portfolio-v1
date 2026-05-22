@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Moon, Sun } from "lucide-react";
+import { Sun, Flower2 } from "lucide-react";
 import { useTheme } from "next-themes";
 
 import { Button } from "@/components/ui/button";
@@ -15,7 +15,6 @@ enum Theme {
 export function ModeToggle() {
   const { theme, setTheme } = useTheme();
 
-  // giúp delay render đến khi component chạy trên client, tránh mismatch giữa server và client.
   const mounted = useMounted();
 
   return (
@@ -24,7 +23,7 @@ export function ModeToggle() {
       size="icon"
       onClick={() => setTheme(theme === Theme.DARK ? Theme.LIGHT : Theme.DARK)}
     >
-      {mounted && (theme === Theme.DARK ? <Sun /> : <Moon />)}
+      {mounted && (theme === Theme.DARK ? <Sun /> : <Flower2 />)}
       {!mounted && <div className="size-3.5" />}
     </Button>
   );
