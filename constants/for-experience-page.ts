@@ -11,10 +11,12 @@ export const EXPERIENCE_ITEMS: ExperienceItem[] = [
     role: "Frontend Developer",
     duration: "09/2024 — Present",
     achievements: [
-      "Developed scalable frontend features using React, Next.js, and TypeScript.",
-      "Optimized UI performance and responsiveness to improve user experience across devices.",
-      "Integrated AWS services including S3, Bedrock, Cognito, and Knowledge Bases into internal workflows.",
-      "Worked with AI-powered features using prompts, foundation models, LangGraph flows, and vector database integrations.",
+      "Developed scalable frontend features using React, Next.js, and TypeScript for AI-powered government contracting platforms.",
+      "Built responsive and high-performance UI systems optimized for complex data-heavy workflows and user experience.",
+      "Contributed to Proposal Engine-related features focused on proposal generation, contract intelligence, and productivity tools.",
+      "Integrated AWS services including S3, Cognito, Bedrock, and Knowledge Bases into AI-driven application workflows.",
+      "Worked with prompts, foundation models, LangGraph flows, and vector database integrations for AI-powered features.",
+      "Collaborated closely with designers and backend engineers to deliver modern, user-centric interfaces and smooth interactions.",
     ],
   },
   {
